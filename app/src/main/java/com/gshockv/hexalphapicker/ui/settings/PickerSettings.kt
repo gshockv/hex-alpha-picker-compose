@@ -30,7 +30,7 @@ import com.gshockv.hexalphapicker.ui.theme.HexAlphaPickerTheme
 @Composable
 fun PickerSettings(
   modifier: Modifier = Modifier,
-  viewModel: AlphaPickerViewModel = hiltViewModel(),
+  viewModel: AlphaPickerViewModel,
   onBackClick: () -> Unit
 ) {
   val uiState = viewModel.uiState.collectAsState()
@@ -130,6 +130,7 @@ fun SettingsAppBar(
 fun PreviewSettingsScreen() {
   HexAlphaPickerTheme {
     PickerSettings(
+      viewModel = hiltViewModel(),
       onBackClick = {}
     )
   }
@@ -140,6 +141,7 @@ fun PreviewSettingsScreen() {
 fun PreviewSettingsScreenDarkTheme() {
   HexAlphaPickerTheme {
     PickerSettings(
+      viewModel = hiltViewModel(),
       onBackClick = {}
     )
   }

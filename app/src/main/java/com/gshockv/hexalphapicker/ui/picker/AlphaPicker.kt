@@ -14,6 +14,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gshockv.hexalphapicker.R
 import com.gshockv.hexalphapicker.ui.AlphaPickerUiState
 import com.gshockv.hexalphapicker.ui.AlphaPickerViewModel
@@ -38,10 +40,11 @@ import kotlin.math.roundToInt
 @Composable
 fun AlphaPicker(
   modifier: Modifier = Modifier,
-  viewModel: AlphaPickerViewModel = hiltViewModel(),
+  viewModel: AlphaPickerViewModel,
   onSettingsClick: () -> Unit
 ) {
   val uiState by viewModel.uiState.collectAsState()
+
   AlphaPicker(
     modifier = modifier,
     uiState = uiState,
@@ -146,7 +149,9 @@ private fun AlphaSlider(
 @Composable
 fun PreviewLightTheme() {
   HexAlphaPickerTheme {
-    AlphaPicker(onSettingsClick = {})
+    AlphaPicker(
+      viewModel = hiltViewModel(),
+      onSettingsClick = {})
   }
 }
 
@@ -154,6 +159,8 @@ fun PreviewLightTheme() {
 @Composable
 fun PreviewDarkTheme() {
   HexAlphaPickerTheme {
-    AlphaPicker(onSettingsClick = {})
+    AlphaPicker(
+      viewModel = hiltViewModel(),
+      onSettingsClick = {})
   }
 }

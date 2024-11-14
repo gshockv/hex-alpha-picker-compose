@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +25,8 @@ fun MainNavigation(
   modifier: Modifier = Modifier
 ) {
   val navController = rememberNavController()
+  val alphaPickerViewModel: AlphaPickerViewModel = hiltViewModel()
+
   NavHost(
     navController  = navController,
     startDestination = "alpha_picker",
@@ -33,6 +36,7 @@ fun MainNavigation(
       route = "alpha_picker"
     ) {
       AlphaPicker(
+        viewModel = alphaPickerViewModel,
         onSettingsClick = { navController.navigate("settings") },
         modifier = Modifier.fillMaxSize()
       )
@@ -41,6 +45,7 @@ fun MainNavigation(
       route = "settings"
     ) {
       PickerSettings(
+        viewModel = alphaPickerViewModel,
         onBackClick = { navController.popBackStack() },
         modifier = Modifier.fillMaxSize())
     }

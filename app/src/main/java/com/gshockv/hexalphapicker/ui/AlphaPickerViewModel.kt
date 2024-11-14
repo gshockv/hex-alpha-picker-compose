@@ -44,16 +44,17 @@ class AlphaPickerViewModel @Inject constructor() : ViewModel() {
 
   private val _uiState = MutableStateFlow(
     AlphaPickerUiState(
+      overlayBaseColor = initialOverlayBaseColor,
+      displaySurfaceBackground = initialDisplaySurfaceBg,
+
       htmlBackgroundDisplayValue = calculateAlphaHtmlValue(
-        position = INITIAL_ALPHA,
-        initialBaseColor = initialOverlayBaseColor.colorInHex
+        initialBaseColor = initialOverlayBaseColor,
+        alphaPercentage = INITIAL_ALPHA
       ),
       overlayColor = calculateOverlayColor(
-        position = INITIAL_ALPHA,
-        initialBaseColor = initialOverlayBaseColor.colorInHex
-      ),
-      overlayBaseColor = initialOverlayBaseColor,
-      displaySurfaceBackground = initialDisplaySurfaceBg
+        initialBaseColor = initialOverlayBaseColor,
+        alphaPercentage = INITIAL_ALPHA
+      )
     )
   )
   val uiState: StateFlow<AlphaPickerUiState> = _uiState.asStateFlow()
@@ -69,18 +70,23 @@ class AlphaPickerViewModel @Inject constructor() : ViewModel() {
   }
 
   fun changeOverlayColor(overlayColor: OverlayColorItem) {
+    Log.d(LOG_TAG, "Applying overlay color: $overlayColor")
+
     _uiState.update { currentState ->
       currentState.copy(
-        overlayBaseColor = overlayColor
+        overlayBaseColor = overlayColor,
+        htmlBackgroundDisplayValue = calculateAlphaHtmlValue(currentState.rawPosition, overlayColor),
+        overlayColor = calculateOverlayColor(currentState.rawPosition, overlayColor)
       )
     }
-    Log.d(LOG_TAG, "Applying overlay color: $overlayColor")
   }
 
   fun changeDisplaySurfaceBackground(displaySurfaceBg: DisplaySurfaceBackgroundItem) {
     _uiState.update { currentState ->
       currentState.copy(
-        displaySurfaceBackground = displaySurfaceBg
+        displaySurfaceBackground = displaySurfaceBg,
+        htmlBackgroundDisplayValue = calculateAlphaHtmlValue(currentState.rawPosition),
+        overlayColor = calculateOverlayColor(currentState.rawPosition)
       )
     }
     Log.d(LOG_TAG, "Applying surface background: $displaySurfaceBg")
@@ -108,21 +114,20 @@ class AlphaPickerViewModel @Inject constructor() : ViewModel() {
     OverlayColorItem(5, "383434"),
   )
 
-  /**
-   * Converts given slider position from float value to HTML representation
-   */
-  private fun calculateAlphaHtmlValue(position: Int, initialBaseColor: String? = null): String {
-    return "#" + calculateAlpha(position) + (initialBaseColor
-      ?: _uiState.value.overlayBaseColor.colorInHex)
+  private fun calculateAlphaHtmlValue(
+    alphaPercentage: Int,
+    initialBaseColor: OverlayColorItem? = null
+  ): String {
+    return "#" + calculateAlpha(alphaPercentage) +
+        (initialBaseColor?.colorInHex ?: _uiState.value.overlayBaseColor.colorInHex)
   }
 
-  /**
-   * Converts given slider position from float value to string representation
-   * need using HEX format
-   */
-  private fun calculateOverlayColor(position: Int, initialBaseColor: String? = null): Long {
-    return (calculateAlpha(position) + (initialBaseColor
-      ?: _uiState.value.overlayBaseColor.colorInHex)).toLong(16)
+  private fun calculateOverlayColor(
+    alphaPercentage: Int,
+    initialBaseColor: OverlayColorItem? = null
+  ): Long {
+    return (calculateAlpha(alphaPercentage)
+        + ((initialBaseColor?.colorInHex ?: _uiState.value.overlayBaseColor.colorInHex))).toLong(16)
   }
 
   /**
