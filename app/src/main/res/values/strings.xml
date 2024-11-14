@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HexAlphaPicker</string>
+    <string name="main_app_screen_title">Hex AlphaPicker</string>
+    <string name="settings_backgrounds">Backgrounds</string>
+    <string name="settings_colors">Colors</string>
+    <string name="settings_title">Settings</string>
+</resources>
