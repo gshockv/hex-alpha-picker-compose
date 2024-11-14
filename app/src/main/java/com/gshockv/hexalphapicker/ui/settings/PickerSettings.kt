@@ -39,6 +39,8 @@ fun PickerSettings(
     modifier = modifier,
     displaySurfaceBackgrounds = viewModel.displaySurfaceBackgrounds(),
     overlayColors = viewModel.overlayColors(),
+    currentSurfaceBackground = uiState.value.displaySurfaceBackground,
+    currentOverlayColor = uiState.value.overlayBaseColor,
     onSelectOverlayColor = { color -> viewModel.changeOverlayColor(color) },
     onSelectDisplaySurfaceBackground = { bg -> viewModel.changeDisplaySurfaceBackground(bg) },
     onApplyClick = onBackClick,
@@ -52,6 +54,8 @@ private fun PickerSettings(
   modifier: Modifier = Modifier,
   displaySurfaceBackgrounds: List<DisplaySurfaceBackgroundItem>,
   overlayColors: List<OverlayColorItem>,
+  currentOverlayColor: OverlayColorItem,
+  currentSurfaceBackground: DisplaySurfaceBackgroundItem,
   onApplyClick: () -> Unit,
   onBackClick: () -> Unit,
   onSelectDisplaySurfaceBackground: (DisplaySurfaceBackgroundItem) -> Unit,
@@ -76,6 +80,7 @@ private fun PickerSettings(
       )
       BackgroundsCarousel(
         allDisplaySurfaceBgs = displaySurfaceBackgrounds,
+        currentDisplaySurfaceBg = currentSurfaceBackground,
         onSelectDisplaySurfaceBackground = onSelectDisplaySurfaceBackground
       )
       Text(
@@ -86,7 +91,8 @@ private fun PickerSettings(
       ColorsGrid(
         modifier = Modifier.padding(horizontal = 16.dp),
         overlayColors = overlayColors,
-        onSelectOverlayColor = onSelectOverlayColor
+        onSelectOverlayColor = onSelectOverlayColor,
+        currentOverlayColor = currentOverlayColor
       )
     }
   }

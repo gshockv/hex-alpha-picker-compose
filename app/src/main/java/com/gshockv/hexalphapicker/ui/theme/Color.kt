@@ -27,5 +27,7 @@ fun alphaSliderActiveTrackColor(darkTheme: Boolean) =
 fun alphaSliderThumbColor(darkTheme: Boolean) =
   if (darkTheme) Color(0xFF5AE841) else Color(0xFF1D6910)
 
-fun selectColorItemBorderColor(darkTheme: Boolean) =
+fun overlayColorItemBorderColor(darkTheme: Boolean) =
   if (darkTheme) Color(0xFFFFFFFF) else Color(0xFFCCCFCC)
+
+fun overlayColorItemCurrent() = Color(0xFF41CD0D)

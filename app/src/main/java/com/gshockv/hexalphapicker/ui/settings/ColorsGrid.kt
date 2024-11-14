@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,12 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gshockv.hexalphapicker.ui.OverlayColorItem
 import com.gshockv.hexalphapicker.ui.theme.HexAlphaPickerTheme
-import com.gshockv.hexalphapicker.ui.theme.selectColorItemBorderColor
+import com.gshockv.hexalphapicker.ui.theme.overlayColorItemBorderColor
+import com.gshockv.hexalphapicker.ui.theme.overlayColorItemCurrent
 
 @Composable
 fun ColorsGrid(
   modifier: Modifier = Modifier,
   overlayColors: List<OverlayColorItem>,
+  currentOverlayColor: OverlayColorItem,
   onSelectOverlayColor: (OverlayColorItem) -> Unit
 ) {
   LazyVerticalGrid(
@@ -37,7 +38,8 @@ fun ColorsGrid(
       // TODO: Highlight current item
       ColorItemComponent(
         colorItem = item,
-        onSelectOverlayColor = onSelectOverlayColor
+        onSelectOverlayColor = onSelectOverlayColor,
+        isCurrent = item == currentOverlayColor
       )
     }
   }
@@ -46,13 +48,14 @@ fun ColorsGrid(
 @Composable
 fun ColorItemComponent(
   colorItem: OverlayColorItem,
-  onSelectOverlayColor: (OverlayColorItem) -> Unit
+  onSelectOverlayColor: (OverlayColorItem) -> Unit,
+  isCurrent: Boolean = false
 ) {
   Surface(
     modifier = Modifier.size(120.dp)
       .border(
-        width = 1.dp,
-        color = selectColorItemBorderColor(isSystemInDarkTheme()),
+        width = if (isCurrent) 4.dp else 2.dp,
+        color = if (isCurrent) overlayColorItemCurrent() else overlayColorItemBorderColor(isSystemInDarkTheme()),
         shape = RoundedCornerShape(size = 10.dp)
       )
       .clip(shape = RoundedCornerShape(size = 10.dp))
@@ -69,6 +72,7 @@ fun PreviewColorsGrid() {
   HexAlphaPickerTheme {
     ColorsGrid(
       overlayColors = listOf(OverlayColorItem(2, "AA3A3A")),
+      currentOverlayColor = OverlayColorItem(2, "AA3A3A"),
       onSelectOverlayColor = {}
     )
   }
