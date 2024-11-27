@@ -15,13 +15,8 @@ This app was developed as a part of the `Learning Jetpack Compose` pathway.
  - Adaptive Layouts
 
 ### Demo
+[Watch the Demo](https://youtube.com/shorts/v1hs8mGeZeU?feature=share)
 
-<video width="1024" controls>
- <source src="https://github.com/gshockv/hex-alpha-picker-compose/blob/main/app-screenshots/hex-alpha-picker-android-app.webm" type="video/webm" >
- Your browser does not support the video tag.
-</video>
-
-![Demo](https://github.com/gshockv/hex-alpha-picker-compose/blob/main/app-screenshots/hex-alpha-picker-android-app.webm)
 
 ### Screenshots
 <img src="https://github.com/gshockv/hex-alpha-picker-compose/blob/main/app-screenshots/handset-main-light-theme.png" height="680" />&nbsp;&nbsp;&nbsp;<img src="https://github.com/gshockv/hex-alpha-picker-compose/blob/main/app-screenshots/handset-settings-light-theme.png" height="680" />
