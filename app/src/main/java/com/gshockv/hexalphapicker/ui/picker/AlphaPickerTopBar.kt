@@ -28,7 +28,8 @@ import com.gshockv.hexalphapicker.ui.theme.appBarSuffixColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlphaPickerTopBar(
-  onSettingsClick: () -> Unit
+  onSettingsClick: () -> Unit,
+  showSettingsButton: Boolean = false
 ) {
   TopAppBar(title = {
     Row {
@@ -53,10 +54,12 @@ fun AlphaPickerTopBar(
   }, colors = TopAppBarDefaults.topAppBarColors(
     containerColor = Color.Transparent,
   ), actions = {
-    IconButton(onClick = onSettingsClick) {
-      Icon(
-        imageVector = Icons.Outlined.Settings, contentDescription = "Settings"
-      )
+    if (showSettingsButton) {
+      IconButton(onClick = onSettingsClick) {
+        Icon(
+          imageVector = Icons.Outlined.Settings, contentDescription = "Settings"
+        )
+      }
     }
   })
 }

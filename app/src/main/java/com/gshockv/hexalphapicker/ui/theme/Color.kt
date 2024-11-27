@@ -31,3 +31,6 @@ fun overlayColorItemBorderColor(darkTheme: Boolean) =
   if (darkTheme) Color(0xFFFFFFFF) else Color(0xFFCCCFCC)
 
 fun overlayColorItemCurrent() = Color(0xFF41CD0D)
+
+fun settingsPaneSurfaceBorderColor(darkTheme: Boolean) =
+  if (darkTheme) PrimaryDark else PrimaryLight

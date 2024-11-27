@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -41,42 +42,47 @@ fun BackgroundsCarousel(
     initialItem = allDisplaySurfaceBgs.indexOf(currentDisplaySurfaceBg),
     itemCount = { allDisplaySurfaceBgs.count() }
   )
-
-  HorizontalUncontainedCarousel(
-    modifier = modifier,
-    state = carouselState,
-    itemWidth = 220.dp,
-    //preferredItemWidth = 200.dp,
-    itemSpacing = 8.dp,
-    contentPadding = PaddingValues(horizontal = 8.dp)
-  ) { indx ->
-    val bg = backgroundItems[indx]
-    val isCurrent = bg == currentDisplaySurfaceBg
-    Box(
-      modifier = Modifier
-    ) {
-      Image(
+  Box(
+    modifier = modifier
+  ) {
+    HorizontalUncontainedCarousel(
+      modifier = Modifier.fillMaxWidth(),
+      state = carouselState,
+      itemWidth = 220.dp,
+      //preferredItemWidth = 200.dp,
+      itemSpacing = 8.dp,
+      contentPadding = PaddingValues(horizontal = 8.dp)
+    ) { indx ->
+      val bg = backgroundItems[indx]
+      val isCurrent = bg == currentDisplaySurfaceBg
+      Box(
         modifier = Modifier
-          .height(205.dp)
-          .maskClip(MaterialTheme.shapes.extraLarge)
-          .clickable { onSelectDisplaySurfaceBackground(bg) },
-        painter = painterResource(id = bg.backgroundId),
-        contentScale = ContentScale.Crop,
-        contentDescription = ""
-      )
-      Text(
-        text = "#${bg.id + 1}",
-        color = Color.White,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-          .padding(end = 20.dp, bottom = 16.dp)
-          .align(alignment = Alignment.BottomEnd)
-          .background(
-            color = if (isCurrent) overlayColorItemCurrent().copy(alpha = 0.75f) else Color.Gray.copy(alpha = 0.45f),
-            shape = CircleShape
-          )
-          .padding(horizontal = 8.dp, vertical = 2.dp)
-      )
+      ) {
+        Image(
+          modifier = Modifier
+            .height(205.dp)
+            .maskClip(MaterialTheme.shapes.extraLarge)
+            .clickable { onSelectDisplaySurfaceBackground(bg) },
+          painter = painterResource(id = bg.backgroundId),
+          contentScale = ContentScale.Crop,
+          contentDescription = ""
+        )
+        Text(
+          text = "#${bg.id + 1}",
+          color = Color.White,
+          textAlign = TextAlign.Center,
+          modifier = Modifier
+            .padding(end = 20.dp, bottom = 16.dp)
+            .align(alignment = Alignment.BottomEnd)
+            .background(
+              color = if (isCurrent) overlayColorItemCurrent().copy(alpha = 0.75f) else Color.Gray.copy(
+                alpha = 0.45f
+              ),
+              shape = CircleShape
+            )
+            .padding(horizontal = 8.dp, vertical = 2.dp)
+        )
+      }
     }
   }
 }
